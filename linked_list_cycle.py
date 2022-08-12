@@ -53,6 +53,19 @@ class Solution(object):
             head = head.next
         return False
 
+    # O(1) memory
+    def hasCyclePointers(self, head):
+        sp = head  # "slow" pointer, moves 1 next per step
+        fp = head  # "fast" pointer, moves 2 nexts per step
+
+        while sp and fp and fp.next:
+            sp = sp.next
+            fp = fp.next.next
+            if fp == sp:  # slow pointer could "meet" fast pointer only in case if we have a cycle
+                return True
+        return False
+
+
 if __name__ == '__main__':
     input_list = create_linked_list([-1, -7, 7, -4, 19, 6, -9, -5, -2, -5])
     rev_list = Solution()
