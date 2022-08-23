@@ -13,13 +13,16 @@
 class Solution(object):
     def plusOne(self, digits):
         plus = 1
-        for i in range(len(digits) - 1, -1, -1):
-            curr = digits[i] + plus
-            digits[i] = curr % 10
+        counter = len(digits) - 1
+        while plus > 0:
+            curr = digits[counter] + plus
+            digits[counter] = curr % 10
             plus = curr // 10
-            if i == 0 and plus == 1:
-                digits[i] = 1
+            if counter == 0 and plus == 1:
+                digits[counter] = 1
                 digits.append(0)
+                plus = 0
+            counter -= 1
         return digits
 
 
