@@ -4,6 +4,9 @@
 # You must write an algorithm with O(log n) runtime complexity.
 
 
+import my_utils.testing as test
+
+
 class Solution(object):
     def search(self, nums, target):
 
@@ -24,25 +27,11 @@ class Solution(object):
 
 
 if __name__ == '__main__':
-    numbers = Solution()
+    solution = Solution()
 
-    if numbers.search([-1,0,3,5,9,12], 12) == 5:
-        print('[-1,0,3,5,9,12], 12: Test OK')
-    else:
-        print('[-1,0,3,5,9,12], 12: Test FAILED.   Expected: 5, Got:', numbers.search([-1,0,3,5,9,12], 12))
+    test.run_test(solution.search, ([-1, 0, 3, 5, 9, 12], 12), 5, '')
+    test.run_test(solution.search, ([-1, 0, 3, 5, 9, 12], 2), -1, '')
+    test.run_test(solution.search, ([5], 5), 0, '')
+    test.run_test(solution.search, ([2, 5], 5), 1, '')
 
-    if numbers.search([-1,0,3,5,9,12], 2) == -1:
-        print('[-1,0,3,5,9,12], 2: Test OK')
-    else:
-        print('[-1,0,3,5,9,12], 2: Test FAILED.   Expected: -1, Got:', numbers.search([-1,0,3,5,9,12], 2))
-
-    if numbers.search([5], 5) == 0:
-        print('[5], 5: Test OK')
-    else:
-        print('[5], 5: Test FAILED.   Expected: 0, Got:', numbers.search([5], 5))
-
-    if numbers.search([2, 5], 5) == 1:
-        print('[2, 5], 5: Test OK')
-    else:
-        print('[2, 5], 5: Test FAILED.   Expected: 1, Got:', numbers.search([2, 5], 5))
 
