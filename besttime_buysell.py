@@ -2,6 +2,10 @@
 # You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
 # Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
 
+
+import my_utils.testing as test
+
+
 class Solution(object):
     def maxProfit(self, prices):
         max_profit = 0
@@ -18,24 +22,10 @@ class Solution(object):
 
 
 if __name__ == '__main__':
-    buy = Solution()
+    solution = Solution()
 
-    if buy.maxProfit([2,1,2,1,0,1,2]) == 2:
-        print('[2,1,2,1,0,1,2]', '- test OK')
-    else:
-        print('[2,1,2,1,0,1,2]', '- test FAILED!,   expected: 2, got:', buy.maxProfit([2,1,2,1,0,1,2]))
+    test.run_test(solution.maxProfit, ([2, 1, 2, 1, 0, 1, 2], ), 2, '')
+    test.run_test(solution.maxProfit, ([7, 1, 5, 3, 6, 4],), 5, '')
+    test.run_test(solution.maxProfit, ([7, 6, 4, 3, 1],), 0, '')
+    test.run_test(solution.maxProfit, ([1, 2, 4],), 3, '')
 
-    if buy.maxProfit([7, 1, 5, 3, 6 ,4]) == 5:
-        print('[7, 1, 5, 3, 6, 4]', '- test OK')
-    else:
-        print('[7, 1, 5, 3, 6, 4]', '- test FAILED!,   expected: 5, got:', buy.maxProfit([7,1,5,3,6,4]))
-
-    if buy.maxProfit([7, 6, 4, 3, 1]) == 0:
-        print('[7,6,4,3,1]', '- test OK')
-    else:
-        print('[7,6,4,3,1]', '- test FAILED!,   expected: 0, got:', buy.maxProfit([7,6,4,3,1]))
-
-    if buy.maxProfit([1, 2, 4]) == 3:
-        print('[1,2,4]', '- test OK')
-    else:
-        print('[1,2,4]', '- test FAILED!,   expected: 3, got:', buy.maxProfit([1, 2, 4]))
