@@ -5,11 +5,12 @@ class Solution(object):
     def searchInsert(self, nums, target):
         lp, rp = 0, len(nums) // 2
 
+        if target < nums[0]:
+            return 0
+        if target > nums[-1]:
+            return len(nums)
+
         while lp <= rp:
-            if target < nums[0]:
-                return 0
-            if target > nums[-1]:
-                return len(nums)
             if target == nums[rp]:
                 return rp
             if target == nums[lp]:
