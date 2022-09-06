@@ -25,7 +25,6 @@ class Solution(object):
         return -1
 
 
-
 if __name__ == '__main__':
     solution = Solution()
 
@@ -33,5 +32,3 @@ if __name__ == '__main__':
     test.run_test(solution.search, ([-1, 0, 3, 5, 9, 12], 2), -1, '')
     test.run_test(solution.search, ([5], 5), 0, '')
     test.run_test(solution.search, ([2, 5], 5), 1, '')
-
-

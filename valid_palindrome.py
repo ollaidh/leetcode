@@ -2,6 +2,8 @@
 # and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.
 # Given a string s, return true if it is a palindrome, or false otherwise.
 
+import my_utils.testing as test
+
 class Solution(object):
     def isPalindrome(self, s):
         l, r = 0, len(s) - 1
@@ -15,7 +17,6 @@ class Solution(object):
             l, r = l + 1, r - 1
         return True
 
-
     def isAlphaNum(self, letter):
         return (ord('A') <= ord(letter) <= ord('Z') or
                 ord('a') <= ord(letter) <= ord('z') or
@@ -24,5 +25,8 @@ class Solution(object):
 
 if __name__ == '__main__':
     check = Solution()
-    print(check.isPalindrome('A man, a plan, a canal: Panama'))
-    print(check.isPalindrome('raceacar'))
+
+    test.run_test(check.isPalindrome, 'A man, a plan, a canal: Panama', True)
+    test.run_test(check.isPalindrome, 'race a car', False)
+    test.run_test(check.isPalindrome, 'FanaRranaf', True)
+
