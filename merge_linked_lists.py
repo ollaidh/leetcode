@@ -4,34 +4,13 @@
 # Return the head of the merged linked list.
 
 
-class ListNode(object):
-    def __init__(self, val=0, nxt=None):
-        self.val = val
-        self.next = nxt
-
-    def __str__(self):
-        line = []
-        curr = self
-        while curr:  # while have not reached the end of linked-list
-            line.append(str(curr.val))
-            curr = curr.next
-        return ' '.join(line)
-
-
-def create_linked_list(lst):
-    head = ListNode(lst[0])
-    curr = head
-
-    for i in range(1, len(lst)):
-        curr.next = ListNode(lst[i])
-        curr = curr.next
-
-    return head
+import my_utils.linked_list as lst
+import my_utils.testing as test
 
 
 class Solution(object):
     def mergeTwoLists(self, list1, list2):
-        dummy = ListNode()
+        dummy = lst.ListNode()
         tail = dummy
 
         while list1 and list2:
@@ -51,9 +30,9 @@ class Solution(object):
         return dummy.next
 
 
-
 if __name__ == '__main__':
-    input_list1 = create_linked_list([1, 2, 4, 7])
-    input_list2 = create_linked_list([1, 3, 4])
     rev_list = Solution()
-    print(rev_list.mergeTwoLists(input_list1, input_list2))
+
+    test.run_test(rev_list.mergeTwoLists, (lst.create_linked_list([1, 2, 4, 7]), lst.create_linked_list([1, 3, 4])), lst.create_linked_list([1, 1, 2, 3, 4, 4, 7]), '')
+    test.run_test(rev_list.mergeTwoLists, (lst.create_linked_list([5, 5]), lst.create_linked_list([5, 5])), lst.create_linked_list([5, 5, 5, 5]), '')
+    test.run_test(rev_list.mergeTwoLists, (lst.create_linked_list([5, 8, 10]), lst.create_linked_list([6, 9, 11, 16, 23, 44])), lst.create_linked_list([5, 6, 8, 9, 10, 11, 16, 23, 44]), '')
