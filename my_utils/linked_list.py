@@ -30,6 +30,9 @@ class ListNode(object):
 
 # creates linked list from a regular list. Takes a regular list as input, returns head of linked list
 def create_linked_list(lst):
+    if not lst:
+        return None
+
     head = ListNode(lst[0])
     curr = head
 
@@ -41,12 +44,15 @@ def create_linked_list(lst):
 
 
 # creates cycled linked list from a regular list. Takes a regular list as input, returns head of linked list
-def create_cycled_linked_list(list):
-    head = ListNode(list[0])
+def create_cycled_linked_list(lst):
+    if not lst:
+        return None
+
+    head = ListNode(lst[0])
     curr = head
 
-    for i in range(1, len(list)):
-        curr.next = ListNode(list[i])
+    for i in range(1, len(lst)):
+        curr.next = ListNode(lst[i])
         curr = curr.next
     curr.next = head.next.next.next.next.next
 
