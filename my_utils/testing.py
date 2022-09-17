@@ -14,6 +14,6 @@ def run_test(func, func_inp, expected, case_name=''):
         actual = func(*func_inp)
         postfix = ' '.join([case_name, 'Input:', ', '.join(input_items)])
     else:
-        actual = func(func_inp)
         postfix = ' '.join([case_name, 'Input:', str(func_inp)])
+        actual = func(func_inp)
     verify_if_equal(actual, expected, postfix)
