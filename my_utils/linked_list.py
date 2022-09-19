@@ -93,6 +93,14 @@ def test_eq():
     tst.verify_if_equal(create_linked_list([0, 1]) == create_linked_list([0, 1, 2, 3]), False, 'Same beginning 2')
 
 
+def test_print_linked_list():
+    tst.verify_if_equal(str(create_linked_list([1, 2, 2, 1])) == '[1,2,2,1]', True, '')
+    tst.verify_if_equal(str(create_linked_list([1, 2, 3, 5, 3, 2, 1])) == '[1,2,3,5,3,2,1]', True, '')
+    tst.verify_if_equal(str(create_linked_list([1, 2])) == '[1,2]', True, '')
+    tst.verify_if_equal(str(create_linked_list([])) == 'None', True, '')
+
+
 if __name__ == '__main__':
     test_eq()
-    print(*create_two_intersected_lists([1, 2, 4], [8, 1, 6], [5, 5, 5, 5]))
+    test_print_linked_list()
+

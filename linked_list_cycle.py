@@ -4,6 +4,8 @@
 # that tail's next pointer is connected to. Note that pos is not passed as a parameter.
 # Return true if there is a cycle in the linked list. Otherwise, return false.
 
+import my_utils.testing as tst
+
 
 class ListNode(object):
     def __init__(self, val=0, nxt=None):
@@ -69,4 +71,5 @@ class Solution(object):
 if __name__ == '__main__':
     input_list = create_linked_list([-1, -7, 7, -4, 19, 6, -9, -5, -2, -5])
     rev_list = Solution()
-    print(rev_list.hasCycle(input_list))
+
+    tst.verify_if_equal(rev_list.hasCycle(input_list), True, '')
