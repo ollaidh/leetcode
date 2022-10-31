@@ -45,7 +45,7 @@ def create_binary_tree(lst):
             curr = curr.left
             curr_ind += 1
         curr_ind += 1
-        if curr_ind < len(lst):
+        if curr_ind < len(lst) and lst[curr_ind]:
             curr.right = TreeNode(lst[curr_ind])
             curr = curr.right
             curr_ind += 1
