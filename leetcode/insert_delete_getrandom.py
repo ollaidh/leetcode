@@ -42,24 +42,24 @@ class RandomizedSet(object):
 
 
 class TestInsDelRand(unittest.TestCase):
-    # def test_create1(self):
-    #     rset = RandomizedSet()
-    #     self.assertEqual(rset.insert(1), True)
-    #     self.assertEqual(rset.remove(2), False)
-    #     self.assertEqual(rset.insert(2), True)
-    #     self.assertTrue(rset.getRandom() > 0)
-    #     self.assertEqual(rset.remove(1), True)
-    #     self.assertEqual(rset.insert(2), False)
-    #     self.assertEqual(rset.getRandom(), 2)
+    def test_create1(self):
+        rset = RandomizedSet()
+        self.assertEqual(rset.insert(1), True)
+        self.assertEqual(rset.remove(2), False)
+        self.assertEqual(rset.insert(2), True)
+        self.assertTrue(rset.getRandom() > 0)
+        self.assertEqual(rset.remove(1), True)
+        self.assertEqual(rset.insert(2), False)
+        self.assertEqual(rset.getRandom(), 2)
 
-    # def test_create2(self):
-    #     rset = RandomizedSet()
-    #     self.assertEqual(rset.insert(0), True)
-    #     self.assertEqual(rset.insert(1), True)
-    #     self.assertEqual(rset.remove(0), True)
-    #     self.assertEqual(rset.insert(2), True)
-    #     self.assertEqual(rset.remove(1), True)
-    #     self.assertEqual(rset.getRandom(), 2)
+    def test_create2(self):
+        rset = RandomizedSet()
+        self.assertEqual(rset.insert(0), True)
+        self.assertEqual(rset.insert(1), True)
+        self.assertEqual(rset.remove(0), True)
+        self.assertEqual(rset.insert(2), True)
+        self.assertEqual(rset.remove(1), True)
+        self.assertEqual(rset.getRandom(), 2)
 
     def test_create3(self):
         rset = RandomizedSet()
