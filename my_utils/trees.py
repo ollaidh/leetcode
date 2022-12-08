@@ -21,6 +21,8 @@ def build_tree_branches(root, index, values):
 
 
 def create_binary_tree(values: list[int]) -> TreeNode:
+    if list is None:
+        return TreeNode(None)
     root = TreeNode()
     build_tree_branches(root, 0, values)
 
