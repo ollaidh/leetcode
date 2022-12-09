@@ -11,10 +11,11 @@ class Solution:
         if root is None or root.val is None:
             return 0
         if low <= root.val <= high:
-            add = root.val
+            return self.rangeSumBST(root.left, low, high) + self.rangeSumBST(root.right, low, high) + root.val
+        elif root.val < low:
+            return self.rangeSumBST(root.right, low, high)
         else:
-            add = 0
-        return self.rangeSumBST(root.left, low, high) + self.rangeSumBST(root.right, low, high) + add
+            return self.rangeSumBST(root.left, low, high)
 
 
 class TestRangeSumBST(unittest.TestCase):
