@@ -51,6 +51,18 @@ class TestCreateBinaryTree(unittest.TestCase):
         print(root)
         self.assertEqual(root.val, None)
 
+    def test_equal_trees(self):
+        root1 = trs.create_binary_tree([10, 5, 15, 3, 7, 13, 18, 1, None, 6])
+        root2 = trs.create_binary_tree([10, 5, 15, 3, 7, 13, 18, 1, None, 6])
+        root3 = trs.create_binary_tree([10, 5, 15, 3, 7, 13, 20, 1, None, 6])
+        root4 = trs.create_binary_tree([10])
+
+        self.assertEqual(root1, root1)
+        self.assertEqual(root1, root2)
+        self.assertNotEqual(root1, root3)
+        self.assertEqual(root4, root4)
+        self.assertNotEqual(root3, root4)
+
 
 if __name__ == '__main__':
     unittest.main()
