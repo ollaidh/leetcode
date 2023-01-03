@@ -1,6 +1,7 @@
 import argparse
 import os
 from pathlib import Path
+import re
 
 
 class LengthChecker:
@@ -113,6 +114,65 @@ class BlankLinesChecker:
         return 'More than two blank lines preceding a code line'
 
 
+class SpacesConstructionChecker:
+    def __init__(self):
+        self.constructor_type = ''
+
+    def check(self, line: str) -> bool:
+        if re.match(' *class  +', line):
+            self.constructor_type = 'class'
+            return False
+        if re.match(' *def  +', line):
+            self.constructor_type = 'def'
+            return False
+        return True
+
+    def error_number(self) -> str:
+        return 'S007'
+
+    def error_msg(self) -> str:
+        return f'Too many spaces after \'{self.constructor_type}\''
+
+
+class ClassCamelCaseChecker:
+    def __init__(self):
+        self.class_name = ''
+
+    def check(self, line: str) -> bool:
+        if re.match(' *class +', line):
+            if re.match(' *class +[A-Z][a-zA-Z0-9]+', line) is None:
+                self.class_name = re.sub('class +', '', line)
+                self.class_name = re.sub(':\\n', '', self.class_name)
+                return False
+        return True
+
+    def error_number(self) -> str:
+        return 'S008'
+
+    def error_msg(self) -> str:
+        return f'Class name \'{self.class_name}\' should use CamelCase'
+
+
+class FuncSnakeCaseChecker:
+    def __init__(self):
+        self.function_name = ''
+
+    def check(self, line: str) -> bool:
+        if re.match(' *def +', line):
+            if re.match(' *def +_?_?[a-z0-9]+_?_?', line) is None:
+                self.function_name = re.sub(' *def +', '', line)
+                self.function_name = re.sub(':\\n', '', self.function_name)
+                self.function_name = re.sub('\(.*\)', '', self.function_name)
+                return False
+        return True
+
+    def error_number(self) -> str:
+        return 'S009'
+
+    def error_msg(self) -> str:
+        return f'Function name \'{self.function_name}\' should use snake_case'
+
+
 class Code:
     def check_file(self, file_name):
         with open(file_name, 'r') as file:
@@ -121,7 +181,10 @@ class Code:
                         UnnecSemicolonChecker(),
                         TwoSpacesChecker(),
                         TodoChecker(),
-                        BlankLinesChecker()]
+                        BlankLinesChecker(),
+                        SpacesConstructionChecker(),
+                        ClassCamelCaseChecker(),
+                        FuncSnakeCaseChecker()]
             current_line = 1
             for line in file:
                 for checker in checkers:
