@@ -1,6 +1,7 @@
 import unittest
 import os
 import dataclasses
+import pathlib
 
 
 @dataclasses.dataclass
@@ -11,7 +12,7 @@ class User:
     user_type: str
 
 
-def get_final_line(filename: str) -> str:
+def get_final_line(filename: pathlib.Path) -> str:
     last_line = ''
     with open(filename) as f:
         for line in f:
@@ -19,7 +20,7 @@ def get_final_line(filename: str) -> str:
     return last_line
 
 
-def password_to_dict(filename: str) -> list:
+def password_to_dict(filename: pathlib.Path) -> list:
     users = []
     with open(filename) as f:
         for line in f:
@@ -30,7 +31,7 @@ def password_to_dict(filename: str) -> list:
     return users
 
 
-def sort_by_shells(filename: str) -> dict:
+def sort_by_shells(filename: pathlib.Path) -> dict:
     shells = {}
     with open(filename) as f:
         for line in f:
@@ -45,11 +46,12 @@ def sort_by_shells(filename: str) -> dict:
 
 class TestFileActions(unittest.TestCase):
     def test_get_final_line(self):
-        file_path = f'{os.getcwd()}/files/sentences.txt'
+
+        file_path = pathlib.Path(__file__).parent.resolve() / 'files' / 'sentences.txt'
         self.assertEqual('Go away.', get_final_line(file_path))
 
     def test_password_to_dict(self):
-        file_path = f'{os.getcwd()}/files/passwds.txt'
+        file_path = pathlib.Path(__file__).parent.resolve() / 'files' / 'passwds.txt'
         users = password_to_dict(file_path)
         self.assertEqual('nobody', users[0].username)
         self.assertEqual(77, users[26].user_id)
@@ -57,7 +59,7 @@ class TestFileActions(unittest.TestCase):
         self.assertEqual('_launchservicesd', users[75].user_type)
 
     def test_sort_by_shells(self):
-        file_path = f'{os.getcwd()}/files/passwds.txt'
+        file_path = pathlib.Path(__file__).parent.resolve() / 'files' / 'passwds.txt'
         shells_data = sort_by_shells(file_path)
         self.assertEqual(['root'], shells_data['/bin/sh'])
         self.assertEqual(74, len(shells_data['/usr/bin/false']))
