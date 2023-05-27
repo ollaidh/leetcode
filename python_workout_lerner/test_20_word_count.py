@@ -1,7 +1,6 @@
 import unittest
 import pathlib
 import dataclasses
-from collections import Counter
 
 
 @dataclasses.dataclass(kw_only=True)
@@ -12,8 +11,12 @@ class FileInfo:
     unique_words: int
 
 
+def new_file_info() -> FileInfo:
+    return FileInfo(characters=0, words=0, lines=0, unique_words=0)
+
+
 def count_file_parameters(filename: pathlib.Path) -> FileInfo:
-    file_info = FileInfo(characters=0, words=0, lines=0, unique_words=0)
+    file_info = new_file_info()
     with open(filename) as f:
         words = set()
         for line in f:
