@@ -27,13 +27,13 @@ def get_all_longest_words(filepath: Path) -> dict:
 
 class TestLongestWords(unittest.TestCase):
     def test_get_longest_word_file(self):
-        filepath = Path(__file__).parent.resolve() / 'words_length_test' / '43-0.txt'
+        filepath = Path(__file__).parent.resolve() / '21_textfiles_test' / '43-0.txt'
         self.assertEqual('ProjectGutenbergEBook', get_longest_word(filepath))
-        filepath = Path(__file__).parent.resolve() / 'words_length_test' / '46-0.txt'
+        filepath = Path(__file__).parent.resolve() / '21_textfiles_test' / '46-0.txt'
         self.assertEqual('ChristmasCarol', get_longest_word(filepath))
 
     def test_get_all_longest_words(self):
-        filepath = Path(__file__).parent.resolve() / 'words_length_test'
+        filepath = Path(__file__).parent.resolve() / '21_textfiles_test'
         self.assertEqual(
             {'1342-0.txt': 'acknowledgedacknowledged',
              '2701-0.txt': 'combinationcombination',
