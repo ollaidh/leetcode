@@ -22,7 +22,6 @@ class TestCsv(unittest.TestCase):
             filepath_inp = pathlib.Path(__file__).parent.resolve() / '22_read_write_csv' / 'input.csv'
             filepath_out = pathlib.Path(tmpdirname) / 'output.csv'
             passwd_to_csv(filepath_inp, filepath_out)
-            f = open(filepath_out)
             with open(filepath_out) as f:
                 file_lines = f.readlines()
                 self.assertEqual(3, len(file_lines))
