@@ -7,7 +7,7 @@ import unittest
 
 def passwd_to_csv(input_file: pathlib.Path, output_file) -> None:
 
-    with open(input_file, 'r') as scvinp, open(output_file, 'w') as csvout:
+    with open(input_file, 'r') as scvinp, open(output_file, 'w', newline='') as csvout:
         inp_reader = csv.reader(scvinp, delimiter=':')
         inp_writer = csv.writer(csvout, delimiter='\t')
         for row in inp_reader:
@@ -22,7 +22,7 @@ class TestCsv(unittest.TestCase):
             filepath_inp = pathlib.Path(__file__).parent.resolve() / '22_read_write_csv' / 'input.csv'
             filepath_out = pathlib.Path(tmpdirname) / 'output.csv'
             passwd_to_csv(filepath_inp, filepath_out)
-            with open(filepath_out, 'r', newline='') as f:
+            with open(filepath_out) as f:
                 file_lines = f.readlines()
                 self.assertEqual(3, len(file_lines))
                 self.assertEqual(2, len(file_lines[0].split('\t')))
