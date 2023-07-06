@@ -11,7 +11,7 @@ def includes_stats_tofile(folderpath: str):
             current_path = os.path.join(subdir, file)
             if not file.endswith(".h"):
                 continue
-            print(current_path)
+            # print(current_path)
             with open(current_path) as f:
                 for line in f:
                     if not line.startswith("#include <Q"):
@@ -27,4 +27,19 @@ def includes_stats_tofile(folderpath: str):
             file.write(f'{key}: {value}\n')
 
 
+def count_lines(folderpath: str) -> int:
+    number_of_lines = 0
+    for subdir, dirs, files in os.walk(folderpath):
+        for file in files:
+            current_path = os.path.join(subdir, file)
+            if file.endswith(".h") or file.endswith(".cpp"):
+                with open(current_path) as f:
+                    for line in f:
+                        number_of_lines += 1
 
+    return number_of_lines
+
+
+if __name__ == "__main__":
+    includes_stats_tofile("/Users/maria/Downloads/src")
+    print(count_lines("/Users/maria/Downloads/src"))
