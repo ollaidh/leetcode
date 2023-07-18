@@ -21,6 +21,16 @@ def copyfile(filepath, copy_to_folder_name, *copynames):
                 copy_to.write(contents)
 
 
+def anyjoin(iterable, separator=' ') -> str:
+    if len(iterable) == 1:
+        return f'{iterable}{separator}'
+    result = ''
+    for i in range(0, len(iterable) - 1):
+        result += f'{str(iterable[i])}{separator}'
+    result += str(iterable[-1])
+    return result
+
+
 class TestFuncParameters(unittest.TestCase):
     def test_multiplier(self):
         self.assertEqual(4, multiplier(2, 2))
@@ -40,6 +50,13 @@ class TestFuncParameters(unittest.TestCase):
             with os.scandir(inp_folder) as folder:
                 for file in folder:
                     self.assertEqual(inp_file_size, os.path.getsize(file))
+
+    def test_anyjoin(self):
+        self.assertEqual("1 2 3", anyjoin([1, 2, 3]))
+        self.assertEqual("a**b**c", anyjoin("abc", "**"))
+        self.assertEqual("a-z", anyjoin("az", "-"))
+        self.assertEqual("a-", anyjoin("a", "-"))
+
 
 
 if __name__ == '__main__':
