@@ -1,9 +1,9 @@
 def verify_if_equal(actual, expected, message):
     postfix = ' '.join([message, 'Expected:', str(expected), 'Got:', str(actual)])
     if actual != expected:
-        print('FAILED test ---', postfix)
+        print('\nFAILED test ---', postfix)
     else:
-        print('OK test -------', postfix)
+        print('\nOK test -------', postfix)
 
 
 def run_test(func, func_inp, expected, case_name=''):
