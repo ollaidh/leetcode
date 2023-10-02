@@ -13,9 +13,8 @@ class Solution:
         for i in range(1, len(nums)):
             if diff == 0:
                 diff = nums[i] - nums[i - 1]
-            else:
-                if diff * (nums[i] - nums[i - 1]) < 0:
-                    return False
+            elif diff * (nums[i] - nums[i - 1]) < 0:
+                return False
         return True
 
 
