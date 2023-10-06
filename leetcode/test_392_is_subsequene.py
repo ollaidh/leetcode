@@ -3,7 +3,7 @@
 # deleting some (can be none) of the characters without disturbing the relative positions
 # of the remaining characters. (i.e., "ace" is a subsequence of "abcde" while "aec" is not).
 
-import my_utils.testing as tst
+import unittest
 
 
 class Solution(object):
@@ -23,9 +23,12 @@ class Solution(object):
         return True
 
 
-if __name__ == '__main__':
-    solution = Solution()
-    tst.run_test(solution.isSubsequence, ('abc', 'ahbgdc'), True, '')
-    tst.run_test(solution.isSubsequence, ('afgn', 'afhjpng'), False, '')
-    tst.run_test(solution.isSubsequence, ('abc', 'aababa'), False, '')
-    tst.run_test(solution.isSubsequence, ('abc', 'aabababc'), True, '')
+class TestSolution(unittest.TestCase):
+    def test_isSubsequence(self):
+        solution = Solution()
+        self.assertTrue(solution.isSubsequence('abc', 'ahbgdc'))
+        self.assertTrue(solution.isSubsequence('abc', 'aabababc'))
+        self.assertFalse(solution.isSubsequence('afgn', 'afhjpng'))
+        self.assertFalse(solution.isSubsequence('abc', 'aababa'))
+
+
