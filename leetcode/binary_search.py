@@ -12,8 +12,6 @@ class Solution(object):
 
         l, r = 0, len(nums) - 1
 
-        mid = (r - l) // 2
-
         while (r - l) >= 0:
             mid = l + (r - l) // 2
             if target > nums[mid]:
