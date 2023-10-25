@@ -11,20 +11,15 @@ class Solution:
         if len(b) > len(a):
             a, b = b, a
 
-        for i in range(len(a) - 1, -1, -1):
-            if i - (len(a) - len(b)) >= 0:
-                curr_sum = int(a[i]) + int(b[i - (len(a) - len(b))]) + add
-            else:
-                curr_sum = int(a[i]) + add
-            if curr_sum == 3:
-                summ.append("1")
+        for i in range(len(a)):
+            first = int(a[-i - 1])
+            second = int(b[-i - 1] if i < len(b) else 0)
+            curr_sum = first + second + add
+            add = 0
+            if curr_sum >= 2:
                 add = 1
-            elif curr_sum == 2:
-                summ.append("0")
-                add = 1
-            else:
-                summ.append(str(curr_sum))
-                add = 0
+            summ.append(str(curr_sum % 2))
+
         if add == 1:
             summ.append("1")
 
