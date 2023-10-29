@@ -23,12 +23,25 @@ class Solution:
 
         return "".join(letters)
 
+    def reverseWordsSplit(self, s: str) -> str:
+        words = s.split()
+        for i in range(len(words)):
+            words[i] = words[i][::-1]
+        return " ".join(words)
+
+    def reverseWordsCompr(self, s: str) -> str:
+        return " ".join([word[::-1] for word in s.split()])
+
 
 class TestSolution(unittest.TestCase):
     def test_reverseWords(self):
         solution = Solution()
-        self.assertEqual("doG gniD", solution.reverseWords("God Ding"))
-        self.assertEqual("s'teL ekat edoCteeL tsetnoc", solution.reverseWords("Let's take LeetCode contest"))
-        self.assertEqual("surpyC", solution.reverseWords("Cyprus"))
-        self.assertEqual("p o o b p e e b", solution.reverseWords("p o o b p e e b"))
-        self.assertEqual("X", solution.reverseWords("X"))
+        functions = [solution.reverseWords, solution.reverseWordsSplit, solution.reverseWordsCompr]
+        for func in functions:
+            self.assertEqual("doG gniD", func("God Ding"))
+            self.assertEqual("s'teL ekat edoCteeL tsetnoc", func("Let's take LeetCode contest"))
+            self.assertEqual("surpyC", func("Cyprus"))
+            self.assertEqual("p o o b p e e b", func("p o o b p e e b"))
+            self.assertEqual("X", func("X"))
+
+
