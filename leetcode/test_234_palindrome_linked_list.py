@@ -14,25 +14,23 @@ class Solution:
             return True
         slow = head
         fast = head
-        prev = None
-        elements_counter = 1
         while fast and fast.next:
             fast = fast.next.next
-            if fast:
-                elements_counter += 1
-            elements_counter += 1
+            slow = slow.next
+
+        prev = None
+        while slow:
             nxt = slow.next
             slow.next = prev
             prev = slow
             slow = nxt
-        if elements_counter % 2 != 0:
-            slow = slow.next
 
-        while slow:
-            if slow.val != prev.val:
+        while prev:
+            print(prev.val, head.val)
+            if prev.val != head.val:
                 return False
-            slow = slow.next
             prev = prev.next
+            head = head.next
         return True
 
 
