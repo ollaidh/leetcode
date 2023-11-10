@@ -8,22 +8,29 @@ from typing import Optional
 from my_utils.linked_list import *
 
 
+def reverse_linked_list(head: ListNode) -> ListNode:
+    # returns the head of reversed second half of the linked list
+    slow = head
+    fast = head
+    while fast and fast.next:
+        fast = fast.next.next
+        slow = slow.next
+
+    prev = None
+    while slow:
+        nxt = slow.next
+        slow.next = prev
+        prev = slow
+        slow = nxt
+    return prev
+
+
 class Solution:
     def isPalindrome(self, head: Optional[ListNode]) -> bool:
         if head is None or head.next is None:
             return True
-        slow = head
-        fast = head
-        while fast and fast.next:
-            fast = fast.next.next
-            slow = slow.next
 
-        prev = None
-        while slow:
-            nxt = slow.next
-            slow.next = prev
-            prev = slow
-            slow = nxt
+        prev = reverse_linked_list(head)
 
         while prev:
             print(prev.val, head.val)
