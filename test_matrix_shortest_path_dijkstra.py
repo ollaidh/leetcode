@@ -143,7 +143,7 @@ class TestDijkstra(unittest.TestCase):
             [1, 1, 1, 1, 1, 1, 1, 1],
             [5, 5, 5, 5, 5, 5, 5, 1]
         ]
-        expected4 = [[(1, 0),
+        expected4 = [(1, 0),
                       (2, 0),
                       (3, 0),
                       (4, 0),
@@ -155,5 +155,5 @@ class TestDijkstra(unittest.TestCase):
                       (5, 5),
                       (5, 6),
                       (5, 7),
-                      (6, 7)]]
+                      (6, 7)]
         self.assertEqual(expected4, find_shortest_path(matrix4))
