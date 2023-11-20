@@ -12,11 +12,6 @@ class Node:
         self.length = length
         self.parent = parent
 
-    def __eq__(self, other):
-        if self or other:
-            return False
-        return self.coords == other.coords and self.length == other.length and self.parent == other.parent
-
     def __le__(self, other):
         return self.length <= other.length
 
