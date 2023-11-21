@@ -24,9 +24,9 @@ class Solution:
                 if grid[i][j] == 1 and (i, j) not in processed:
                     area = 1
                     cells_analyze = {(i, j)}
+                    processed.add((i, j))
                     while cells_analyze:
                         curr = cells_analyze.pop()
-                        processed.add(curr)
                         neighbours = get_neighbours(curr[0], curr[1], size_x, size_y)
                         for neigh in neighbours:
                             if grid[neigh[0]][neigh[1]] == 1 and neigh not in processed:
