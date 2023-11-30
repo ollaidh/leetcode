@@ -14,6 +14,7 @@
 import unittest
 
 
+# two stacks solution:
 class BrowserHistory:
 
     def __init__(self, homepage: str):
@@ -39,9 +40,46 @@ class BrowserHistory:
         return self.forward_history[-1]
 
 
+# one list solution:
+class BrowserHistoryAlternative:
+    def __init__(self, homepage: str):
+        self.history = [homepage]
+        self.curr_index = 0
+
+    def visit(self, url: str) -> None:
+        if self.curr_index < len(self.history) - 1:
+            del self.history[self.curr_index + 1:]
+        self.curr_index += 1
+        self.history.append(url)
+
+    def back(self, steps: int) -> str:
+        self.curr_index = max(0, self.curr_index - steps)
+        return self.history[self.curr_index]
+
+    def forward(self, steps: int) -> str:
+        self.curr_index = min(len(self.history) - 1, self.curr_index + steps)
+        return self.history[self.curr_index]
+
+
 class TestBrowserHistory(unittest.TestCase):
     def test_browser_history(self):
         history = BrowserHistory('homepage.com')
+        history.visit('page1.com')
+        history.visit('page2.com')
+        history.visit('page3.com')
+        history.visit('page4.com')
+        history.visit('page5.com')
+        self.assertEqual('page4.com', history.back(1))
+        self.assertEqual('page2.com', history.back(2))
+        self.assertEqual('page3.com', history.forward(1))
+        self.assertEqual('page5.com', history.forward(50))
+        self.assertEqual('homepage.com', history.back(150))
+        history.visit('page0.com')
+        self.assertEqual('homepage.com', history.back(150))
+        self.assertEqual('page0.com', history.forward(150))
+
+    def test_browser_history_alternative(self):
+        history = BrowserHistoryAlternative('homepage.com')
         history.visit('page1.com')
         history.visit('page2.com')
         history.visit('page3.com')
