@@ -1,3 +1,18 @@
+# Add to part 1: Now some of the digits are actually spelled out with letters:
+# one, two, three, four, five, six, seven, eight, and nine also count as valid "digits".
+#
+# Find the real first and last digit on each line. For example:
+#
+# two1nine
+# eightwothree
+# abcone2threexyz
+# xtwone3four
+# 4nineeightseven2
+# zoneight234
+# 7pqrstsixteen
+# In this example, the calibration values are 29, 83, 13, 24, 42, 14, and 76. Adding these together produces 281.
+
+
 import unittest
 import pathlib
 
@@ -63,5 +78,8 @@ class TestTrebuchet(unittest.TestCase):
 
         self.assertEqual(18, get_calibration_value('oneight'))
         self.assertEqual(99, get_calibration_value('9pc'))
+
+    def test_trebuchet(self):
+        self.assertEqual(52840, trebuchet('input_day_01_trebuchet.dat'))
 
 
