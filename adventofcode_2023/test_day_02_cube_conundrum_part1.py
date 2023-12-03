@@ -57,15 +57,15 @@ def get_game_parameters(game: str) -> tuple[int, list[CubesPack]]:
 
 
 def play(input_path: str, base_pack: CubesPack):
-        ids_sum = 0
+    ids_sum = 0
 
-        filepath_inp = pathlib.Path(__file__).parent.resolve() / 'inputs' / input_path
-        with open(filepath_inp) as f:
-            file_lines = f.readlines()
-            for line in file_lines:
-                game_id, cubes_packs = get_game_parameters(line)
-                ids_sum += play_game(game_id, cubes_packs, base_pack)
-        return ids_sum
+    filepath_inp = pathlib.Path(__file__).parent.resolve() / 'inputs' / input_path
+    with open(filepath_inp) as f:
+        file_lines = f.readlines()
+        for line in file_lines:
+            game_id, cubes_packs = get_game_parameters(line)
+            ids_sum += play_game(game_id, cubes_packs, base_pack)
+    return ids_sum
 
 
 class TestCubeConundrum(unittest.TestCase):
