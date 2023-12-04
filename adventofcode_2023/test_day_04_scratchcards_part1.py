@@ -33,4 +33,4 @@ def scratchcards(input_path: str):
 
 class TestScratchcards(unittest.TestCase):
     def test_scratchcards(self):
-        self.assertEqual(1, scratchcards('input_day_04_scratchcards.dat'))
+        self.assertEqual(22193, scratchcards('input_day_04_scratchcards.dat'))
