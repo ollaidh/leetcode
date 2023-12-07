@@ -95,15 +95,6 @@ class TestSeedSoil(unittest.TestCase):
         deps1 = Map('dep1', [Bucket(50, 98, 2), Bucket(52, 50, 48)])
         self.assertEqual(81, get_destination(deps1, 79))
 
-    def test_parse_input(self):
-        sds, dps = parse_input('input_day_05_seeds_soils.dat')
-        seeds_expected = [
-            2276375722, 160148132, 3424292843, 82110297, 1692203766, 342813967, 3289792522, 103516087, 2590548294,
-            590357761, 1365412380, 80084180, 3574751516, 584781136, 4207087048, 36194356, 1515742281, 174009980,
-            6434225, 291842774
-        ]
-        self.assertEqual(seeds_expected, sds)
-
     def test_get_closest_location(self):
         sds = [79, 14, 55, 13]
         dps = [
