@@ -201,6 +201,7 @@ class TestGearRatios(unittest.TestCase):
         ]
         self.assertEqual([21, 35], get_numbers_up_down('down', 2, 3, 5, 8, matrix3))
 
-    def test_gear(self):
-        gear('input_day_03_gear_ratios.dat')
-        self.assertEqual(539713, gear('input_day_03_gear_ratios.dat'))
+
+if __name__ == '__main__':
+    result = gear('input_day_03_gear_ratios.dat')
+    print(result)

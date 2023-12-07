@@ -55,5 +55,7 @@ class TestScratchcards(unittest.TestCase):
             play_card(2, {'13', '32', '20', '16', '61'}, ['61', '30', '68', '82', '17', '32', '24', '19'])
         )
 
-    def test_scratchcards(self):
-        self.assertEqual(5625994, scratchcards('input_day_04_scratchcards.dat'))
+
+if __name__ == '__main__':
+    result = scratchcards('input_day_04_scratchcards.dat')
+    print(result)

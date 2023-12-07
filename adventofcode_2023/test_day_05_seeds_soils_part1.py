@@ -64,29 +64,20 @@ def get_closest_location(seeds: list[int], deps: dict[str: list[dict[str, int]]]
     return closest
 
 
-# class TestSeedSoil(unittest.TestCase):
-#     def test_get_destination(self):
-#         deps1 = [
-#             {'destination': 50, 'source': 98, 'range_length': 2},
-#             {'destination': 52, 'source': 50, 'range_length': 48}
-#         ]
-#
-#         self.assertEqual(81, get_destination(deps1, 79))
-#
-#     def test_parse_input(self):
-#         seeds, deps = parse_input('input_day_05_seeds_soils.dat')
-#         seeds_expected = [
-#             2276375722, 160148132, 3424292843, 82110297, 1692203766, 342813967, 3289792522, 103516087, 2590548294,
-#             590357761, 1365412380, 80084180, 3574751516, 584781136, 4207087048, 36194356, 1515742281, 174009980,
-#             6434225, 291842774
-#         ]
-#
-#         self.assertEqual(seeds_expected, seeds)
-#         seed_location(seeds[0], deps)
-#
-#     def test_get_closest_location(self):
-#         seeds, deps = parse_input('input_day_05_seeds_soils.dat')
-#         self.assertEqual(484023871, get_closest_location(seeds, deps))
+class TestSeedSoil(unittest.TestCase):
+    def test_get_destination(self):
+        deps1 = [
+            {'destination': 50, 'source': 98, 'range_length': 2},
+            {'destination': 52, 'source': 50, 'range_length': 48}
+        ]
+
+        self.assertEqual(81, get_destination(deps1, 79))
+
+
+if __name__ == '__main__':
+    seeds, deps = parse_input('input_day_05_seeds_soils.dat')
+    location = get_closest_location(seeds, deps)
+    print(location)
 
 
 

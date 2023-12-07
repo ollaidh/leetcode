@@ -24,8 +24,6 @@ def race(input_path: str) -> int:
     return race_count_winning_cases(time, best_distance)
 
 
-class TestWaitForIt(unittest.TestCase):
-    def test_mult_winning_cases_input(self):
-        # result = race('input_day_06_waitforit.dat')
-        # self.assertEqual(1, result)
-        self.assertEqual(1, 1)
+if __name__ == '__main__':
+    result = race('input_day_06_waitforit.dat')
+    print(result)

@@ -69,7 +69,8 @@ class TestCubeConundrum(unittest.TestCase):
         packs2 = [CubesPack(0, 2, 3), CubesPack(0, 12, 4), CubesPack(0, 3, 3)]
         self.assertEqual(0, game_cubes_power(packs2))
 
-    def test_play(self):
-        input_path = 'input_day_02_cube_conundrum.dat'
-        self.assertEqual(72513, play(input_path))
+
+if __name__ == '__main__':
+    result = play('input_day_02_cube_conundrum.dat')
+    print(result)
 

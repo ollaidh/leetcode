@@ -91,47 +91,44 @@ def get_closest_location(seeds: list[int], deps: list[Map]):
 
 
 class TestSeedSoil(unittest.TestCase):
-    # def test_get_destination(self):
-    #     deps1 = Map('dep1', [Bucket(50, 98, 2), Bucket(52, 50, 48)])
-    #     self.assertEqual(81, get_destination(deps1, 79))
+    def test_get_destination(self):
+        deps1 = Map('dep1', [Bucket(50, 98, 2), Bucket(52, 50, 48)])
+        self.assertEqual(81, get_destination(deps1, 79))
 
-    # def test_parse_input(self):
-    #     seeds, deps = parse_input('input_day_05_seeds_soils.dat')
-    #     seeds_expected = [
-    #         2276375722, 160148132, 3424292843, 82110297, 1692203766, 342813967, 3289792522, 103516087, 2590548294,
-    #         590357761, 1365412380, 80084180, 3574751516, 584781136, 4207087048, 36194356, 1515742281, 174009980,
-    #         6434225, 291842774
-    #     ]
-    #     self.assertEqual(seeds_expected, seeds)
+    def test_parse_input(self):
+        sds, dps = parse_input('input_day_05_seeds_soils.dat')
+        seeds_expected = [
+            2276375722, 160148132, 3424292843, 82110297, 1692203766, 342813967, 3289792522, 103516087, 2590548294,
+            590357761, 1365412380, 80084180, 3574751516, 584781136, 4207087048, 36194356, 1515742281, 174009980,
+            6434225, 291842774
+        ]
+        self.assertEqual(seeds_expected, sds)
 
-    # def test_get_closest_location(self):
-    #     with cProfile.Profile() as profile:
-    #         seeds = [79, 14, 55, 13]
-    #         deps = [
-    #             Map('seed - to - soil', [Bucket(50, 98, 2), Bucket(52, 50, 48)]),
-    #             Map('soil - to - fertilizer', [Bucket(0, 15, 37), Bucket(37, 52, 2), Bucket(39, 0, 15)]),
-    #             Map('fertilizer - to - water', [Bucket(49, 53, 8), Bucket(0, 11, 42), Bucket(42, 0, 7), Bucket(57, 7, 4)]),
-    #             Map('water - to - light', [Bucket(88, 18, 7), Bucket(18, 25, 70)]),
-    #             Map('light - to - temperature', [Bucket(45, 77, 23), Bucket(81, 45, 19), Bucket(68, 64, 13)]),
-    #             Map('temperature - to - humidity', [Bucket(0, 69, 1), Bucket(1, 0, 69)]),
-    #             Map('humidity - to - location', [Bucket(60, 56, 37), Bucket(56, 93, 4)])
-    #         ]
-    #
-    #         self.assertEqual(46, get_closest_location(seeds, deps))
-    #     results = pstats.Stats(profile)
-    #     results.sort_stats(pstats.SortKey.TIME)
-    #     results.print_stats()
+    def test_get_closest_location(self):
+        sds = [79, 14, 55, 13]
+        dps = [
+            Map('seed - to - soil', [Bucket(50, 98, 2), Bucket(52, 50, 48)]),
+            Map('soil - to - fertilizer', [Bucket(0, 15, 37), Bucket(37, 52, 2), Bucket(39, 0, 15)]),
+            Map('fertilizer - to - water', [Bucket(49, 53, 8), Bucket(0, 11, 42), Bucket(42, 0, 7), Bucket(57, 7, 4)]),
+            Map('water - to - light', [Bucket(88, 18, 7), Bucket(18, 25, 70)]),
+            Map('light - to - temperature', [Bucket(45, 77, 23), Bucket(81, 45, 19), Bucket(68, 64, 13)]),
+            Map('temperature - to - humidity', [Bucket(0, 69, 1), Bucket(1, 0, 69)]),
+            Map('humidity - to - location', [Bucket(60, 56, 37), Bucket(56, 93, 4)])
+        ]
 
-    def test_result(self):
-        with cProfile.Profile() as profile:
-            seeds, deps = parse_input('input_day_05_seeds_soils.dat')
-            get_closest_location(seeds, deps)
-            # self.assertEqual(46294175, get_closest_location(seeds, deps))
+        self.assertEqual(46, get_closest_location(sds, dps))
 
-        results = pstats.Stats(profile)
-        results.sort_stats(pstats.SortKey.TIME)
-        results.print_stats()
-        results.dump_stats('results_2.prof')
+
+if __name__ == '__main__':
+    with cProfile.Profile() as profile:
+        seeds, deps = parse_input('input_day_05_seeds_soils.dat')
+        location = get_closest_location(seeds, deps)
+        print(location)
+
+    results = pstats.Stats(profile)
+    results.sort_stats(pstats.SortKey.TIME)
+    results.print_stats()
+    results.dump_stats('results_2.prof')
 
 
 

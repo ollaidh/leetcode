@@ -43,6 +43,7 @@ class TestWaitForIt(unittest.TestCase):
         best_distances = [9, 40, 200]
         self.assertEqual(288, mult_winning_cases(times, best_distances))
 
-    # def test_mult_winning_cases_input(self):
-    #     result = race('input_day_06_waitforit.dat')
-    #     self.assertEqual(503424, result)
+
+if __name__ == '__main__':
+    result = race('input_day_06_waitforit.dat')
+    print(result)

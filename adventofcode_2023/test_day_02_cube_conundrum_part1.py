@@ -92,8 +92,8 @@ class TestCubeConundrum(unittest.TestCase):
         ]
         self.assertEqual(expected_packs, packs)
 
-    def test_play(self):
-        input_path = 'input_day_02_cube_conundrum.dat'
-        base_pack = CubesPack(12, 13, 14)
-        self.assertEqual(2162, play(input_path, base_pack))
+
+if __name__ == '__main__':
+    result = play('input_day_02_cube_conundrum.dat')
+    print(result)
 

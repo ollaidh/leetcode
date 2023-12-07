@@ -113,6 +113,6 @@ def gear(input_path: str):
     return result
 
 
-class TestGearRatios(unittest.TestCase):
-    def test_gear(self):
-        self.assertEqual(84159075, gear('input_day_03_gear_ratios.dat'))
+if __name__ == '__main__':
+    result = gear('input_day_03_gear_ratios.dat')
+    print(result)

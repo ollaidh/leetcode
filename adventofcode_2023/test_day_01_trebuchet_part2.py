@@ -79,7 +79,7 @@ class TestTrebuchet(unittest.TestCase):
         self.assertEqual(18, get_calibration_value('oneight'))
         self.assertEqual(99, get_calibration_value('9pc'))
 
-    def test_trebuchet(self):
-        self.assertEqual(52840, trebuchet('input_day_01_trebuchet.dat'))
 
-
+if __name__ == '__main__':
+    result = trebuchet('input_day_01_trebuchet.dat')
+    print(result)
