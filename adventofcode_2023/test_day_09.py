@@ -2,13 +2,22 @@ import unittest
 import pathlib
 
 
-def solve_one_history(seq: list[int]) -> int:
+def solve_one_history_part1(seq: list[int]) -> int:
     if all(x == 0 for x in seq):
         return 0
     new_seq = []
     for i in range(len(seq) - 1):
         new_seq.append(seq[i + 1] - seq[i])
-    return solve_one_history(new_seq) + seq[-1]
+    return solve_one_history_part1(new_seq) + seq[-1]
+
+
+def solve_one_history_part2(seq: list[int]) -> int:
+    if all(x == 0 for x in seq):
+        return 0
+    new_seq = []
+    for i in range(len(seq) - 1):
+        new_seq.append(seq[i + 1] - seq[i])
+    return seq[0] - solve_one_history_part2(new_seq)
 
 
 def parse_input(input_path: str) -> list[list[int]]:
@@ -20,22 +29,38 @@ def parse_input(input_path: str) -> list[list[int]]:
     return result
 
 
-def play(input_path: str) -> int:
+def play_1(input_path: str) -> int:
     result = 0
     histories = parse_input(input_path)
     for history in histories:
-        result += solve_one_history(history)
+        result += solve_one_history_part1(history)
+    return result
+
+
+def play_2(input_path: str) -> int:
+    result = 0
+    histories = parse_input(input_path)
+    for history in histories:
+        result += solve_one_history_part2(history)
     return result
 
 
 class TestSolve(unittest.TestCase):
-    def test_solve_one_history(self):
+    def test_solve_one_history_part1(self):
         input_seq2 = [1,   3,   6,  10,  15,  21]
-        self.assertEqual(28, solve_one_history(input_seq2))
+        self.assertEqual(28, solve_one_history_part1(input_seq2))
 
         input_seq2 = [10,  13,  16,  21,  30,  45]
-        self.assertEqual(68, solve_one_history(input_seq2))
+        self.assertEqual(68, solve_one_history_part1(input_seq2))
+
+    def test_solve_one_history_part2(self):
+        input_seq2 = [1,   3,   6,  10,  15,  21]
+        self.assertEqual(0, solve_one_history_part2(input_seq2))
+
+        input_seq2 = [10,  13,  16,  21,  30,  45]
+        self.assertEqual(5, solve_one_history_part2(input_seq2))
 
 
 if __name__ == '__main__':
-    print(play('input_day_09.dat'))
+    print(play_1('input_day_09.dat'))
+    print(play_2('input_day_09.dat'))
