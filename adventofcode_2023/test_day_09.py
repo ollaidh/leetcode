@@ -29,19 +29,11 @@ def parse_input(input_path: str) -> list[list[int]]:
     return result
 
 
-def play_1(input_path: str) -> int:
+def play(input_path: str, solve_func) -> int:
     result = 0
     histories = parse_input(input_path)
     for history in histories:
-        result += solve_one_history_part1(history)
-    return result
-
-
-def play_2(input_path: str) -> int:
-    result = 0
-    histories = parse_input(input_path)
-    for history in histories:
-        result += solve_one_history_part2(history)
+        result += solve_func(history)
     return result
 
 
@@ -62,5 +54,5 @@ class TestSolve(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    print(play_1('input_day_09.dat'))
-    print(play_2('input_day_09.dat'))
+    print(play('input_day_09.dat', solve_one_history_part1))
+    print(play('input_day_09.dat', solve_one_history_part2))
