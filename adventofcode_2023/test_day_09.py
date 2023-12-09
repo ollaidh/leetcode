@@ -39,17 +39,17 @@ def play(input_path: str, solve_func) -> int:
 
 class TestSolve(unittest.TestCase):
     def test_solve_one_history_part1(self):
-        input_seq2 = [1,   3,   6,  10,  15,  21]
+        input_seq2 = [1, 3, 6, 10, 15, 21]
         self.assertEqual(28, solve_one_history_part1(input_seq2))
 
-        input_seq2 = [10,  13,  16,  21,  30,  45]
+        input_seq2 = [10, 13, 16, 21, 30, 45]
         self.assertEqual(68, solve_one_history_part1(input_seq2))
 
     def test_solve_one_history_part2(self):
-        input_seq2 = [1,   3,   6,  10,  15,  21]
+        input_seq2 = [1, 3, 6, 10, 15, 21]
         self.assertEqual(0, solve_one_history_part2(input_seq2))
 
-        input_seq2 = [10,  13,  16,  21,  30,  45]
+        input_seq2 = [10, 13, 16, 21, 30, 45]
         self.assertEqual(5, solve_one_history_part2(input_seq2))
 
 
