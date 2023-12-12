@@ -134,7 +134,7 @@ def play_2(input_path: str):
 class TestPipes(unittest.TestCase):
     def test_get_directions(self):
         field = [
-            ['.', '.', 'S', '.', '.'],
+            ['.', '.', '.', '.', '.'],
             ['.', 'F', '-', '7', '.'],
             ['.', '|', '.', '|', '.'],
             ['.', 'L', '-', 'J', '.'],
