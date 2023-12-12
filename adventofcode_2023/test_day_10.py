@@ -1,13 +1,12 @@
 import unittest
 import pathlib
-from typing import Tuple
 
 
 class PipeField:
     def __init__(self, field: list[list[str]]):
         self.field = field
         for i in range(len(self.field)):
-            for j in range(len(self.field)):
+            for j in range(len(self.field[i])):
                 if self.field[i][j] == 'S':
                     self.start_x = i
                     self.start_y = j
@@ -44,24 +43,69 @@ class PipeField:
                         break
         return connected
 
+    def type_start_pipe(self, start_directions):
+        dir_1 = start_directions[0]
+        dir_2 = start_directions[1]
+        if dir_1[0] == dir_2[0]:
+            self.field[self.start_x][self.start_y] = "-"
+        elif dir_1[1] == dir_2[1]:
+            self.field[self.start_x][self.start_y] = "|"
+        elif dir_1[0] == dir_2[0] + 1 and dir_1[1] == dir_2[1] + 1:
+            self.field[self.start_x][self.start_y] = "L"
+        elif dir_1[0] == dir_2[0] + 1 and dir_1[1] == dir_2[1] - 1:
+            self.field[self.start_x][self.start_y] = "J"
+        elif dir_1[0] == dir_2[0] - 1 and dir_1[1] == dir_2[1] - 1:
+            self.field[self.start_x][self.start_y] = "7"
+        elif dir_1[0] == dir_2[0] - 1 and dir_1[1] == dir_2[1] + 1:
+            self.field[self.start_x][self.start_y] = "F"
 
-def do_loop(field: PipeField) -> int:
+
+def do_loop(field: PipeField) -> dict[tuple[int, int]: str]:
     start_x = field.start_x
     start_y = field.start_y
-    steps_counter = 1
+    result = {(start_x, start_y): field.field[start_x][start_y]}
     prev_i, prev_j = start_x, start_y
     i = field.get_directions_from_start()[0][0]
     j = field.get_directions_from_start()[0][1]
     while i != start_x or j != start_y:
+        result[(i, j)] = field.field[i][j]
+
         directions = field.get_directions(i, j)
         for d in directions:
             if d != (prev_i, prev_j):
                 break
         prev_i, prev_j = i, j
         i, j = d
-        steps_counter += 1
+    return result
 
-    return steps_counter
+
+def check_point_inside_loop(x_point: int, y_point: int, loop: dict[tuple[int, int]: str],
+                            x_max: int, y_max: int) -> bool:
+    intersections = 0
+    i, j = x_point + 1, y_point + 1
+    while i <= x_max and j <= y_max:
+        if (i, j) in loop and loop[(i, j)] != "7" and loop[(i, j)] != "L":
+            intersections += 1
+        i += 1
+        j += 1
+
+    return intersections % 2 != 0
+
+
+def calc_enclosed_points(loop: dict[tuple[int, int]: str]) -> int:
+    result = 0
+    x_coords = [point[0] for point in loop]
+    y_coords = [point[1] for point in loop]
+    x_min = min(x_coords)
+    x_max = max(x_coords)
+    y_min = min(y_coords)
+    y_max = max(y_coords)
+
+    for i in range(x_min, x_max + 1):
+        for j in range(y_min, y_max + 1):
+            if (i, j) not in loop:
+                result += check_point_inside_loop(i, j, loop, x_max, y_max)
+    return result
 
 
 def parse_input(input_path: str) -> list[list[str]]:
@@ -73,10 +117,18 @@ def parse_input(input_path: str) -> list[list[str]]:
     return result
 
 
-def play(input_path: str):
+def play_1(input_path: str):
     pipe_field = parse_input(input_path)
     field = PipeField(pipe_field)
-    return do_loop(field) / 2
+    return len(do_loop(field)) / 2
+
+
+def play_2(input_path: str):
+    pipe_field = parse_input(input_path)
+    field = PipeField(pipe_field)
+    field.type_start_pipe(field.get_directions_from_start())
+    loop = do_loop(field)
+    return calc_enclosed_points(loop)
 
 
 class TestPipes(unittest.TestCase):
@@ -116,8 +168,140 @@ class TestPipes(unittest.TestCase):
             ['.', '.', '.', '.', '.']
         ]
         pipe_field = PipeField(field)
-        self.assertEqual(8, do_loop(pipe_field))
+        pipe_field.type_start_pipe([(3, 2), (2, 3)])
+        result = do_loop(pipe_field)
+        expected = {
+            (3, 3): "J", (3, 2): "-", (3, 1): "L", (2, 1): "|",
+            (1, 1): "F", (1, 2): "-", (1, 3): "7", (2, 3): "|"
+        }
+        print(result)
+        self.assertEqual(8, len(do_loop(pipe_field)))
+        self.assertEqual(expected, result)
+
+    def test_type_start_pipe(self):
+        field = [
+            ['.', '.', '.', '.', '.'],
+            ['.', 'F', '-', '7', '.'],
+            ['.', '|', '.', '|', '.'],
+            ['.', 'L', '-', 'J', '.'],
+            ['.', '.', '.', '.', '.']
+        ]
+        pipe_field = PipeField(field)
+
+        pipe_field.start_x, pipe_field.start_y = 1, 2
+        pipe_field.field[pipe_field.start_x][pipe_field.start_y] = "S"
+        pipe_field.type_start_pipe(pipe_field.get_directions_from_start())
+        self.assertEqual("-", pipe_field.field[pipe_field.start_x][pipe_field.start_y])
+
+        pipe_field.start_x, pipe_field.start_y = 2, 1
+        pipe_field.field[pipe_field.start_x][pipe_field.start_y] = "S"
+        pipe_field.type_start_pipe(pipe_field.get_directions_from_start())
+        self.assertEqual("|", pipe_field.field[pipe_field.start_x][pipe_field.start_y])
+
+        pipe_field.start_x, pipe_field.start_y = 3, 1
+        pipe_field.field[pipe_field.start_x][pipe_field.start_y] = "S"
+        pipe_field.type_start_pipe(pipe_field.get_directions_from_start())
+        self.assertEqual("L", pipe_field.field[pipe_field.start_x][pipe_field.start_y])
+
+        pipe_field.start_x, pipe_field.start_y = 3, 3
+        pipe_field.field[pipe_field.start_x][pipe_field.start_y] = "S"
+        pipe_field.type_start_pipe(pipe_field.get_directions_from_start())
+        self.assertEqual("J", pipe_field.field[pipe_field.start_x][pipe_field.start_y])
+
+        pipe_field.start_x, pipe_field.start_y = 1, 3
+        pipe_field.field[pipe_field.start_x][pipe_field.start_y] = "S"
+        pipe_field.type_start_pipe(pipe_field.get_directions_from_start())
+        self.assertEqual("7", pipe_field.field[pipe_field.start_x][pipe_field.start_y])
+
+        pipe_field.start_x, pipe_field.start_y = 1, 1
+        pipe_field.field[pipe_field.start_x][pipe_field.start_y] = "S"
+        pipe_field.type_start_pipe(pipe_field.get_directions_from_start())
+        self.assertEqual("F", pipe_field.field[pipe_field.start_x][pipe_field.start_y])
+
+    def test_check_point_inside_loop(self):
+        loop = {
+            (3, 3): "J", (3, 2): "-", (3, 1): "L", (2, 1): "|",
+            (1, 1): "F", (1, 2): "-", (1, 3): "7", (2, 3): "|"
+        }
+        x_max, y_max = 3, 3
+
+        self.assertTrue(check_point_inside_loop(2, 2, loop, x_max, y_max))
+        self.assertFalse(check_point_inside_loop(3, 3, loop, x_max, y_max))
+        self.assertFalse(check_point_inside_loop(3, 0, loop, x_max, y_max))
+
+        field = [
+            ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+            ['.', 'S', '-', '-', '-', '-', '-', '-', '-', '7', '.'],
+            ['.', '|', 'F', '-', '-', '-', '-', '-', '7', '|', '.'],
+            ['.', '|', '|', '.', '.', '.', '.', '.', '|', '|', '.'],
+            ['.', '|', '|', '.', '.', '.', '.', '.', '|', '|', '.'],
+            ['.', '|', 'L', '-', '7', '.', 'F', '-', 'J', '|', '.'],
+            ['.', '|', '.', '.', '|', '.', '|', '.', '.', '|', '.'],
+            ['.', 'L', '-', '-', 'J', '.', 'L', '-', '-', 'J', '.'],
+            ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.']
+        ]
+        pipe_field = PipeField(field)
+        dirs = pipe_field.get_directions_from_start()
+        pipe_field.type_start_pipe(dirs)
+        loop = do_loop(pipe_field)
+        self.assertTrue(check_point_inside_loop(6, 2, loop, 9, 11))
+
+        field = [
+            ['.', 'F', '-', '-', '-', '-', '7', 'F', '7', 'F', '7', 'F', '7', 'F', '-', '7', '.', '.', '.', '.'],
+            ['.', '|', 'F', '-', '-', '7', '|', '|', '|', '|', '|', '|', '|', '|', 'F', 'J', '.', '.', '.', '.'],
+            ['.', '|', '|', '.', 'F', 'J', '|', '|', '|', '|', '|', '|', '|', '|', 'L', '7', '.', '.', '.', '.'],
+            ['F', 'J', 'L', '7', 'L', '7', 'L', 'J', 'L', 'J', '|', '|', 'L', 'J', '.', 'L', '-', '7', '.', '.'],
+            ['L', '-', '-', 'J', '.', 'L', '7', '.', '.', '.', 'L', 'J', 'S', '7', 'F', '-', '7', 'L', '7', '.'],
+            ['.', '.', '.', '.', 'F', '-', 'J', '.', '.', 'F', '7', 'F', 'J', '|', 'L', '7', 'L', '7', 'L', '7'],
+            ['.', '.', '.', '.', 'L', '7', '.', 'F', '7', '|', '|', 'L', '7', '|', '.', 'L', '7', 'L', '7', '|'],
+            ['.', '.', '.', '.', '.', '|', 'F', 'J', 'L', 'J', '|', 'F', 'J', '|', 'F', '7', '|', '.', 'L', 'J'],
+            ['.', '.', '.', '.', 'F', 'J', 'L', '-', '7', '.', '|', '|', '.', '|', '|', '|', '|', '.', '.', '.'],
+            ['.', '.', '.', '.', 'L', '-', '-', '-', 'J', '.', 'L', 'J', '.', 'L', 'J', 'L', 'J', '.', '.', '.']
+        ]
+        pipe_field = PipeField(field)
+        dirs = pipe_field.get_directions_from_start()
+        pipe_field.type_start_pipe(dirs)
+        loop = do_loop(pipe_field)
+        self.assertTrue(check_point_inside_loop(4, 7, loop, 10, 20))
+
+    def test_calc_enclosed_points(self):
+        field = [
+            ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+            ['.', 'S', '-', '-', '-', '-', '-', '-', '-', '7', '.'],
+            ['.', '|', 'F', '-', '-', '-', '-', '-', '7', '|', '.'],
+            ['.', '|', '|', '.', '.', '.', '.', '.', '|', '|', '.'],
+            ['.', '|', '|', '.', '.', '.', '.', '.', '|', '|', '.'],
+            ['.', '|', 'L', '-', '7', '.', 'F', '-', 'J', '|', '.'],
+            ['.', '|', '.', '.', '|', '.', '|', '.', '.', '|', '.'],
+            ['.', 'L', '-', '-', 'J', '.', 'L', '-', '-', 'J', '.'],
+            ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.']
+        ]
+        pipe_field = PipeField(field)
+        dirs = pipe_field.get_directions_from_start()
+        pipe_field.type_start_pipe(dirs)
+        loop = do_loop(pipe_field)
+        result = calc_enclosed_points(loop)
+        self.assertEqual(4, result)
+
+        field = [
+            ['.', 'F', '-', '-', '-', '-', '7', 'F', '7', 'F', '7', 'F', '7', 'F', '-', '7', '.', '.', '.', '.'],
+            ['.', '|', 'F', '-', '-', '7', '|', '|', '|', '|', '|', '|', '|', '|', 'F', 'J', '.', '.', '.', '.'],
+            ['.', '|', '|', '.', 'F', 'J', '|', '|', '|', '|', '|', '|', '|', '|', 'L', '7', '.', '.', '.', '.'],
+            ['F', 'J', 'L', '7', 'L', '7', 'L', 'J', 'L', 'J', '|', '|', 'L', 'J', '.', 'L', '-', '7', '.', '.'],
+            ['L', '-', '-', 'J', '.', 'L', '7', '.', '.', '.', 'L', 'J', 'S', '7', 'F', '-', '7', 'L', '7', '.'],
+            ['.', '.', '.', '.', 'F', '-', 'J', '.', '.', 'F', '7', 'F', 'J', '|', 'L', '7', 'L', '7', 'L', '7'],
+            ['.', '.', '.', '.', 'L', '7', '.', 'F', '7', '|', '|', 'L', '7', '|', '.', 'L', '7', 'L', '7', '|'],
+            ['.', '.', '.', '.', '.', '|', 'F', 'J', 'L', 'J', '|', 'F', 'J', '|', 'F', '7', '|', '.', 'L', 'J'],
+            ['.', '.', '.', '.', 'F', 'J', 'L', '-', '7', '.', '|', '|', '.', '|', '|', '|', '|', '.', '.', '.'],
+            ['.', '.', '.', '.', 'L', '-', '-', '-', 'J', '.', 'L', 'J', '.', 'L', 'J', 'L', 'J', '.', '.', '.']
+        ]
+        pipe_field = PipeField(field)
+        dirs = pipe_field.get_directions_from_start()
+        pipe_field.type_start_pipe(dirs)
+        loop = do_loop(pipe_field)
+        result = calc_enclosed_points(loop)
+        self.assertEqual(8, result)
 
 
 if __name__ == '__main__':
-    print(play('input_day_10.dat'))
+    print(play_2('input_day_10.dat'))
