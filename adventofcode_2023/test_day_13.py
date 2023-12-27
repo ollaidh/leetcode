@@ -31,14 +31,23 @@ def find_symetry(matrix: list[list[str]]) -> tuple[int, str]:
     assert False
 
 
-def repair_smudge(row1: list[str], row2: list[str]) -> bool:
-    diff_indexes = []
+def count_smudges_in_rows(row1: list[str], row2: list[str]) -> int:
+    result = 0
     for i in range(len(row1)):
         if row1[i] != row2[i]:
-            diff_indexes.append(i)
-        if len(diff_indexes) > 1:
-            return False
-    return True
+            result += 1
+    return result
+
+
+def count_smudges(matrix: list[list[str]], row_index: int) -> int:
+    result = 0
+    top_row = row_index
+    bot_row = top_row + 1
+    while top_row >= 0 and bot_row < len(matrix):
+        result += count_smudges_in_rows(matrix[top_row], matrix[bot_row])
+        top_row -= 1
+        bot_row += 1
+    return result
 
 
 def find_smudged_symetry(matrix: list[list[str]]) -> tuple[int, str]:
@@ -46,26 +55,9 @@ def find_smudged_symetry(matrix: list[list[str]]) -> tuple[int, str]:
     for symmetry_type in symmetry_types:
         field = symmetry_types[symmetry_type]
         for i in range(len(field) - 1):
-            repaired = False
-            symmetry = True
-            if field[i] == field[i + 1] or repair_smudge(field[i], field[i + 1]) is True:
-                if field[i] != field[i + 1]:
-                    repaired = True
-                    if i == 0:
-                        return 1, symmetry_type
-                up_index = i - 1
-                down_index = i + 2
-                while up_index >= 0 and down_index <= len(field) - 1:
-                    if field[up_index] != field[down_index]:
-                        if repaired is True or repair_smudge(field[up_index], field[down_index]) is False:
-                            symmetry = False
-                            break
-                        else:
-                            repaired = True
-                    up_index -= 1
-                    down_index += 1
-                if symmetry and repaired is True:
-                    return i + 1, symmetry_type
+            symmetry = count_smudges(field, i)
+            if symmetry == 1:
+                return i + 1, symmetry_type
     assert False
 
 
@@ -190,6 +182,17 @@ class TestIncidence(unittest.TestCase):
             ['#', '.', '#', '#', '.', '#', '.']
         ]
         self.assertEqual((10, 'hor'), find_smudged_symetry(field))
+
+        field = [
+            ['.', '#', '#', '.', '#', '.', '.', '#', '.', '#', '#', '.', '#', '#', '#'],
+            ['#', '#', '#', '#', '.', '#', '.', '.', '#', '#', '#', '#', '#', '#', '#'],
+            ['.', '#', '#', '.', '#', '#', '.', '#', '.', '#', '#', '#', '#', '#', '#'],
+            ['#', '.', '.', '#', '.', '#', '.', '.', '#', '.', '.', '#', '.', '#', '#'],
+            ['.', '#', '#', '.', '#', '#', '.', '#', '#', '.', '#', '#', '#', '.', '.'],
+            ['.', '.', '#', '.', '#', '.', '#', '.', '#', '.', '#', '.', '#', '.', '.'],
+            ['.', '.', '.', '.', '#', '.', '#', '.', '.', '#', '.', '#', '#', '#', '#']
+        ]
+        self.assertEqual((2, 'vert'), find_smudged_symetry(field))
 
     def test_play(self):
         result = play('inputs_tests/input_day_13_test.dat', 'straight')
