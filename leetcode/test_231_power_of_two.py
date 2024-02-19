@@ -7,7 +7,7 @@ import unittest
 
 class Solution:
     def isPowerOfTwo(self, n: int) -> bool:
-        return n.bit_count() == 1 and bin(n)[2] == "1"
+        return n > 0 and n.bit_count() == 1
 
 
 class TestSolution(unittest.TestCase):
@@ -19,3 +19,4 @@ class TestSolution(unittest.TestCase):
         self.assertFalse(solution.isPowerOfTwo(22))
         self.assertFalse(solution.isPowerOfTwo(0))
         self.assertFalse(solution.isPowerOfTwo(1000))
+        self.assertFalse(solution.isPowerOfTwo(-16))
