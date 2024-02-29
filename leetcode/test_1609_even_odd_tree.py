@@ -64,13 +64,13 @@ class TestSolution(unittest.TestCase):
     def test_isEvenOddTree(self):
         solution = Solution()
 
-        input1 = create_binary_tree([1, 10, 4, 3, None, 7, 9, 12, 8, 6, None, None, 2])
+        input1 = create_binary_tree_dense([1, 10, 4, 3, None, 7, 9, 12, 8, 6, None, None, 2])
         self.assertTrue(solution.isEvenOddTree(input1))
 
-        input2 = create_binary_tree([5, 4, 2, 3, 3, 7])
+        input2 = create_binary_tree_dense([5, 4, 2, 3, 3, 7])
         self.assertFalse(solution.isEvenOddTree(input2))
 
-        input3 = create_binary_tree(
+        input3 = create_binary_tree_dense(
             [13, 34, 32, 23, 25, 27, 29, 44, 40, 36, 34, 30, 30, 28, 26, 3, 7, 9, 11, 15, 17, 21, 25, None, None, 27,
              31, 35, None, 37, None, 30, None, 26, None, None, None, 24, None, 20, 16, 12, 10, None, None, 8, None,
              None, None, None, None, 6, None, None, None, None, None, 15, 19, None, None, None, None, 23, None, 27, 29,
