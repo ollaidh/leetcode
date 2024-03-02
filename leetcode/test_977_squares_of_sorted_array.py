@@ -31,13 +31,12 @@ class Solution:
                 remaining = [num * num for num in nums[0:lp]]
                 result.extend(remaining)
                 break
+            if abs(nums[lp]) <= abs(nums[rp]):
+                result.append(nums[lp] * nums[lp])
+                lp -= 1
             else:
-                if abs(nums[lp]) <= abs(nums[rp]):
-                    result.append(nums[lp] * nums[lp])
-                    lp -= 1
-                else:
-                    result.append(nums[rp] * nums[rp])
-                    rp += 1
+                result.append(nums[rp] * nums[rp])
+                rp += 1
 
         return result
 
