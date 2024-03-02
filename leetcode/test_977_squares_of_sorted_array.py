@@ -24,11 +24,13 @@ class Solution:
         lp, rp = start_pos - 1, start_pos
         while lp >= 0 or rp < len(nums):
             if lp < 0:
-                result.append(nums[rp] * nums[rp])
-                rp += 1
+                remaining = [num * num for num in nums[rp:]]
+                result.extend(remaining)
+                break
             elif rp >= len(nums):
-                result.append(nums[lp] * nums[lp])
-                lp -= 1
+                remaining = [num * num for num in nums[0:lp]]
+                result.extend(remaining)
+                break
             else:
                 if abs(nums[lp]) <= abs(nums[rp]):
                     result.append(nums[lp] * nums[lp])
