@@ -13,7 +13,7 @@ def find_first_positive(nums: list[int]) -> tuple[int, int]:
     if nums[left] >= 0:
         return left - 1, left
     if nums[right] >= 0:
-        return left - 1, right
+        return right - 1, right
     return len(nums) - 1, len(nums)
 
 
