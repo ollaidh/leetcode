@@ -27,7 +27,7 @@ class Solution:
                 result.extend(remaining)
                 break
             elif rp >= len(nums):
-                remaining = [num * num for num in nums[0:lp]]
+                remaining = [num * num for num in nums[lp::-1]]
                 result.extend(remaining)
                 break
             else:
@@ -53,3 +53,4 @@ class TestSolution(unittest.TestCase):
         self.assertEqual([4, 9, 9, 49, 121], solution.sortedSquares([-7, -3, 2, 3, 11]))
         self.assertEqual([0], solution.sortedSquares([0]))
         self.assertEqual([1, 4, 9, 25], solution.sortedSquares([-5, -3, -2, -1]))
+        self.assertEqual([0, 4], solution.sortedSquares([-2, 0]))
