@@ -30,11 +30,11 @@ class Solution:
                 result.append(nums[lp] * nums[lp])
                 lp -= 1
             else:
-                min_val = min(nums[lp] * nums[lp], nums[rp] * nums[rp])
-                result.append(min_val)
-                if min_val == nums[lp] * nums[lp]:
+                if abs(nums[lp]) <= abs(nums[rp]):
+                    result.append(nums[lp] * nums[lp])
                     lp -= 1
                 else:
+                    result.append(nums[rp] * nums[rp])
                     rp += 1
 
         return result
