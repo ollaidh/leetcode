@@ -28,7 +28,7 @@ class ListNode(object):
         return '[' + ','.join(line) + ']'
 
     def __hash__(self):
-        return hash((self.val, self.next))
+        return hash(id(self))
 
 
 # creates linked list from a regular list. Takes a regular list as input, returns head of linked list
@@ -47,17 +47,20 @@ def create_linked_list(lst):
 
 
 # creates cycled linked list from a regular list. Takes a regular list as input, returns head of linked list
-def create_cycled_linked_list(lst):
+def create_cycled_linked_list(lst: list, cycle_start_index: int) -> ListNode | None:
     if not lst:
         return None
 
     head = ListNode(lst[0])
     curr = head
+    cycled_node = head
 
     for i in range(1, len(lst)):
         curr.next = ListNode(lst[i])
         curr = curr.next
-    curr.next = head.next.next.next.next.next
+        if i == cycle_start_index:
+            cycled_node = curr
+    curr.next = cycled_node
 
     return head
 
@@ -103,4 +106,3 @@ def test_print_linked_list():
 if __name__ == '__main__':
     test_eq()
     test_print_linked_list()
-
