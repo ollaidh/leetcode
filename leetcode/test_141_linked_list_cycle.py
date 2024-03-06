@@ -4,7 +4,8 @@
 # that tail's next pointer is connected to. Note that pos is not passed as a parameter.
 # Return true if there is a cycle in the linked list. Otherwise, return false.
 
-import my_utils.testing as tst
+import unittest
+from my_utils import linked_list as llst
 
 
 class ListNode(object):
@@ -19,18 +20,6 @@ class ListNode(object):
             line.append(str(curr.val))
             curr = curr.next
         return ' '.join(line)
-
-
-def create_linked_list(lst):
-    head = ListNode(lst[0])
-    curr = head
-
-    for i in range(1, len(lst)):
-        curr.next = ListNode(lst[i])
-        curr = curr.next
-    curr.next = head.next.next.next.next.next
-
-    return head
 
 
 class Solution(object):
@@ -63,13 +52,27 @@ class Solution(object):
         while sp and fp and fp.next:
             sp = sp.next
             fp = fp.next.next
-            if fp == sp:  # slow pointer could "meet" fast pointer only in case if we have a cycle
+            print(fp.val)
+            if id(fp) == id(sp):  # slow pointer could "meet" fast pointer only in case if we have a cycle
                 return True
         return False
 
 
-if __name__ == '__main__':
-    input_list = create_linked_list([-1, -7, 7, -4, 19, 6, -9, -5, -2, -5])
-    rev_list = Solution()
+class TestSolution(unittest.TestCase):
+    def test_hasCycle(self):
+        solution = Solution()
 
-    tst.verify_if_equal(rev_list.hasCycle(input_list), True, '')
+        input1 = llst.create_cycled_linked_list([1, 2, 3, 4, 5], 1)
+        self.assertTrue(solution.hasCycle(input1))
+        self.assertTrue(solution.hasCycleCheat(input1))
+        self.assertTrue(solution.hasCyclePointers(input1))
+
+        input2 = llst.create_cycled_linked_list([3, 2, 0, -4], 2)
+        self.assertTrue(solution.hasCycle(input2))
+        self.assertTrue(solution.hasCycleCheat(input2))
+        self.assertTrue(solution.hasCyclePointers(input2))
+
+        input3 = llst.create_linked_list([1])
+        self.assertFalse(solution.hasCycle(input3))
+        self.assertFalse(solution.hasCycleCheat(input3))
+        self.assertFalse(solution.hasCyclePointers(input3))
