@@ -14,9 +14,7 @@ class Solution:
         max_freq = 1
         result = 0
         for num in nums:
-            if num not in freqs:
-                freqs[num] = 0
-            freqs[num] += 1
+            freqs[num] = freqs.get(num, 0) + 1
             max_freq = max(max_freq, freqs[num])
         for _, freq in freqs.items():
             if freq == max_freq:
