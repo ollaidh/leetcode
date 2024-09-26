@@ -31,7 +31,21 @@ class Board:
         self.disposition[stop_line][start_column] = "O"
         self.disposition[start_line][start_column] = "."
 
-    def roll_board_north(self):
+    def roll_stone_south(self, start_line: int, start_column: int):
+        if start_line == len(self.disposition) - 1:
+            return
+
+        stop_line = start_line
+        while stop_line < len(self.disposition) - 1:
+            if self.disposition[stop_line + 1][start_column] in ["#", "O"]:
+                self.disposition[start_line][start_column] = "."
+                self.disposition[stop_line][start_column] = "O"
+                return
+            stop_line += 1
+        self.disposition[stop_line][start_column] = "O"
+        self.disposition[start_line][start_column] = "."
+
+    def roll_board(self):
         for j in range(len(self.disposition[0])):
             for i in range(len(self.disposition)):
                 if self.disposition[i][j] == "O":
@@ -58,7 +72,7 @@ def get_board_from_file(filepath: str) -> list[list[str]]:
         return board
 
 
-class TestRollStines(unittest.TestCase):
+class TestRollStones(unittest.TestCase):
     def test_roll_stone_north(self):
         board1 = Board([
             ["."],
@@ -123,6 +137,71 @@ class TestRollStines(unittest.TestCase):
         board3.roll_stone_north(4, 0)
         self.assertEqual(expected_result3, board3)
 
+    def test_roll_stone_south(self):
+        board1 = Board([
+            ["."],
+            ["O"],
+            ["."],
+            ["."],
+            ["."],
+            ["."],
+            ["."],
+        ])
+        expected_result1 = Board([
+            ["."],
+            ["."],
+            ["."],
+            ["."],
+            ["."],
+            ["."],
+            ["O"],
+        ])
+        board1.roll_stone_south(1, 0)
+        self.assertEqual(expected_result1, board1)
+
+        board2 = Board([
+            ["."],
+            ["."],
+            ["."],
+            ["."],
+            ["."],
+            ["."],
+            ["O"],
+        ])
+        expected_result2 = Board([
+            ["."],
+            ["."],
+            ["."],
+            ["."],
+            ["."],
+            ["."],
+            ["O"],
+        ])
+        board2.roll_stone_south(6, 0)
+        self.assertEqual(expected_result2, board2)
+
+        board3 = Board([
+            ["O"],
+            ["."],
+            ["."],
+            ["."],
+            ["."],
+            ["O"],
+            ["."],
+        ])
+        expected_result3 = Board([
+            ["."],
+            ["."],
+            ["."],
+            ["."],
+            ["O"],
+            ["O"],
+            ["."],
+        ])
+        board3.roll_stone_south(0, 0)
+        print(board3)
+        self.assertEqual(expected_result3, board3)
+
     def test_roll_board_north(self):
         board = Board([
             ['O', '.', '.', '.', '.', '#', '.', '.', '.', '.'],
@@ -148,14 +227,14 @@ class TestRollStines(unittest.TestCase):
             ['#', '.', '.', '.', '.', '#', '#', '#', '.', '.'],
             ['#', '.', '.', '.', '.', '#', '.', '.', '.', '.']
         ])
-        board.roll_board_north()
+        board.roll_board()
         self.assertEqual(expected_result, board)
 
 
 if __name__ == '__main__':
-    board_data = get_board_from_file('inputs/input_day_14.dat')
-    board = Board(board_data)
-    board.roll_board_north()
-    board.calc_weight()
-    print(board.weight)
-    # unittest.main()
+    # board_data = get_board_from_file('inputs/input_day_14.dat')
+    # board = Board(board_data)
+    # board.roll_board()
+    # board.calc_weight()
+    # print(board.weight)
+    unittest.main()
